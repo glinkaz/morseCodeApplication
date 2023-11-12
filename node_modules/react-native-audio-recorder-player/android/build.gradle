@@ -1,0 +1,76 @@
+
+buildscript {
+    ext.getExtOrDefault = {name ->
+        return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.ext.get(name)
+    }
+    
+    ext {
+        gradleVersion = '4.1.0'
+        kotlinVersion = '1.6.0'
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+  if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+    namespace "com.dooboolab.audiorecorderplayer"
+  }
+  compileSdkVersion safeExtGet('compileSdkVersion', 31)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 24)
+    targetSdkVersion safeExtGet('targetSdkVersion', 31)
+    versionCode 1
+    versionName "1.0"
+  }
+
+  kotlinOptions {
+      jvmTarget = "1.8"
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet('kotlinVersion', project.ext.kotlinVersion)}"
+
+  def supportLibVersion = safeExtGet('supportLibVersion', safeExtGet('supportVersion', null))
+  def androidXVersion = safeExtGet('androidXVersion', null)
+  if (supportLibVersion && androidXVersion == null) {
+    implementation "com.android.support:support-annotations:$supportLibVersion"
+    implementation "com.android.support:customtabs:$supportLibVersion"
+  } else {
+    def defaultAndroidXVersion = "1.2.0"
+    if (androidXVersion == null) {
+      androidXVersion = defaultAndroidXVersion
+    }
+    def androidXAnnotation = safeExtGet('androidXAnnotation', androidXVersion)
+    def androidXBrowser = safeExtGet('androidXBrowser', androidXVersion)
+    implementation "androidx.annotation:annotation:$androidXAnnotation"
+    implementation "androidx.browser:browser:$androidXBrowser"
+  }
+}
