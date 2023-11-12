@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
-import {  Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import * as Sharing from 'expo-sharing';
+import * as DocumentPicker from 'expo-document-picker';
 
- 
-export default function MorseToTextScreen() { 
+export default function MorseToTextScreen() {
   const [recording, setRecording] = useState(null);
   const [recordingStatus, setRecordingStatus] = useState('idle');
   const [audioPermission, setAudioPermission] = useState(null);
   const [savedFileName, setSavedFileName] = useState(null);
-
-
+  const [singleFile, setSingleFile] = useState(null);
+  const [blobFile, setBlobFile] = useState(null);
+  
   useEffect(() => {
-
     // Simply get recording permission upon first render
     async function getPermission() {
       await Audio.requestPermissionsAsync().then((permission) => {
@@ -64,10 +65,9 @@ export default function MorseToTextScreen() {
         console.log('Stopping Recording')
         await recording.stopAndUnloadAsync();
         const recordingUri = recording.getURI();
-        setUriFile(recordingUri)
         // Create a file name for the recording
         const fileName = `recording-${Date.now()}.wav`;
-        
+
         // Move the recording to the new directory with the new file name
         await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
         await FileSystem.moveAsync({
@@ -86,13 +86,97 @@ export default function MorseToTextScreen() {
     }
   }
 
+  //   async function uploadFile() {
+
+  //     if (audioPermission) {
+  //       await Audio.setAudioModeAsync({
+  //         allowsRecordingIOS: true,
+  //         playsInSilentModeIOS: true
+  //       })
+  //     }
+  //     //Check if any file is selected or not
+  //     if (singleFile != null) {
+  //       //If file selected then create FormData
+  //       const fileToUpload = singleFile;
+  //       const data = new FormData();
+  //       data.append('name', 'Image Upload');
+  //       data.append('file_attachment', fileToUpload);
+  //       let res = await fetch(
+  //         'http://localhost//webservice/user/uploadImage',
+  //         {
+  //           method: 'post',
+  //           body: data,
+  //           headers: {
+  //             'Content-Type': 'multipart/form-data; ',
+  //           },
+  //         }
+  //       );
+  //       let responseJson = await res.json();
+  //       if (responseJson.status == 1) {
+  //         alert('Upload Successful');
+  //       }
+  //     } else {
+  //       //if no file selected the show alert
+  //       alert('Please Select File first');
+  //     }
+  // };
+
+  // async function selectFile() {
+  //   // Opening Document Picker to select one file
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       // Provide which type of file you want user to pick
+  //       type: [DocumentPicker.types.allFiles],
+  //       // There can me more options as well
+  //       // DocumentPicker.types.allFiles
+  //       // DocumentPicker.types.images
+  //       // DocumentPicker.types.plainText
+  //       // DocumentPicker.types.audio
+  //       // DocumentPicker.types.pdf
+  //     });
+  //     // Printing the log realted to the file
+  //     console.log('res : ' + JSON.stringify(res));
+  //     // Setting the state to show single file attributes
+  //     setSingleFile(res);
+  //   } catch (err) {
+  //     setSingleFile(null);
+  //     // Handling any exception (If any)
+  //     // if (DocumentPicker.isCancel(err)) {
+  //     //   // If user canceled the document selection
+  //     //   alert('Canceled');
+  //     // } else {
+  //     //   // For Unknown Error
+  //     //   alert('Unknown Error: ' + JSON.stringify(err));
+  //     //   throw err;
+  //     // }
+  //   }
+  // };
+
+  async function uploadFile() {
+    const result = await DocumentPicker.getDocumentAsync({})
+    console.log(result.assets[0].uri)
+    if (result != null && !result.canceled) {
+      console.log('File not empty')
+          setRecordingStatus('stopped');
+          await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
+          await FileSystem.moveAsync({
+            from: result.assets[0].uri,
+            to: FileSystem.documentDirectory + 'recordings/' + `${result.assets[0].name}`
+          });
+          console.log(FileSystem.documentDirectory + 'recordings/' + `${result.assets[0].name}`);
+          setRecording(null);
+          setRecordingStatus('stopped');
+          setSavedFileName(result.assets[0].name);
+          }
+    }
+
   async function resetRecording() {
     try {
 
       if (recordingStatus === 'stopped') {
         console.log('Reset Recording')
         setRecording(null);
-        await FileSystem.deleteAsync( FileSystem.documentDirectory + 'recordings/' + `${savedFileName}` )
+        await FileSystem.deleteAsync(FileSystem.documentDirectory + 'recordings/' + `${savedFileName}`)
         setSavedFileName(null);
 
       }
@@ -106,7 +190,7 @@ export default function MorseToTextScreen() {
     try {
 
       if (recordingStatus === 'stopped') {
-      
+
         // This is for simply playing the sound back
         const playbackObject = new Audio.Sound();
         await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${savedFileName}` });
@@ -125,10 +209,10 @@ export default function MorseToTextScreen() {
 
       if (recordingStatus === 'stopped') {
         console.log('Download Recording')
-      
+
         const ifSharing = await Sharing.shareAsync(FileSystem.documentDirectory + 'recordings/' + `${savedFileName}`);
-      
-        console.log('share async '+ ifSharing)
+
+        console.log('share async ' + ifSharing)
 
       }
 
@@ -137,69 +221,90 @@ export default function MorseToTextScreen() {
     }
   }
 
-    async function handleRecordButtonPress() {
-      if (recording) {
-        const audioUri = await stopRecording(recording);
-        if (audioUri) {
-          console.log('Saved audio file to', savedUri);
-        }
-      } else {
-        await startRecording();
+  async function handleRecordButtonPress() {
+    if (recording) {
+      const audioUri = await stopRecording(recording);
+      if (audioUri) {
+        console.log('Saved audio file to', savedUri);
       }
+    } else {
+      await startRecording();
     }
-
-    // export function MorseToTextScreen() {
-      
+  }
 
 
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding:40
-      },
-      buttonCircle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 128,
-        height: 128,
-        borderRadius: 64,
-        backgroundColor: 'red',
-      },
-      buttonStyle: {
-        marginHorizontal: 5,
-        marginTop: 15,
-        marginBottom: 15,
-        borderBlockColor: 'grey',
-        borderWidth: 1,
-        padding:10,
-        borderRadius: 5,
-        // backgroundColor:'grey',
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 40
+    },
+    buttonCircle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 128,
+      height: 128,
+      borderRadius: 64,
+      backgroundColor: 'red',
+    },
+    buttonStyle: {
+      marginHorizontal: 5,
+      marginTop: 5,
+      marginBottom: 5,
+      borderBlockColor: 'grey',
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 5,
+      // backgroundColor:'grey',
 
-      },
-      outputText: {
-        margin: 20,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        height: '40%',
-        width: '90%',
-        backgroundColor: 'lightgrey',
-        padding: 10,
-        borderRadius: 5
-      }
+    },
+    buttonUpload: {
+      marginHorizontal: 5,
+      marginTop: 15,
+      marginBottom: 5,
+      borderWidth: 1,
+      padding: 10,
+      backgroundColor:'black',
+      borderRadius: 5
+    
+
+    },
+    outputText: {
+      margin: 20,
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      height: '40%',
+      width: '90%',
+      backgroundColor: 'lightgrey',
+      padding: 10,
+      borderRadius: 5
+    }
   });
 
   return (
     <View style={styles.container}>
       <Text>
-      {recordingStatus == "recording" ? "\n\nStop recording\n" : "\n\nStart recording\n"}
+        {recordingStatus == "recording" ? "\n\nStop recording\n" : "\n\nStart recording\n"}
       </Text>
-    
+
       <TouchableOpacity style={styles.buttonCircle} onPress={handleRecordButtonPress}>
         <FontAwesome name={recording ? 'stop-circle' : 'circle'} size={64} color="white" />
       </TouchableOpacity>
-      <View style={{ flexDirection:"row" }}>
+
+      <View>
+      <TouchableOpacity
+        style={styles.buttonUpload}
+        activeOpacity={0.5}
+        onPress={uploadFile}>
+          <FontAwesome name={'upload'} color="white" >
+        <Text>Upload File</Text>
+        </FontAwesome>
+      </TouchableOpacity>
+
+    </View>
+
+      <View style={{ flexDirection: "row" }}>
         <TouchableOpacity style={styles.buttonStyle} onPress={resetRecording}>
           <Text>
             Reset
@@ -225,12 +330,13 @@ export default function MorseToTextScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.outputText}>
+        <Text >
+          {"Przetlumaczony tekst z morse'a jakoś tam przeslany z backendu"}
+        </Text>
+      </View>
 
-    <Text style = {styles.outputText}>
-      {"Przetlumaczony tekst z morse'a jakoś tam przeslany z backendu"}
-      </Text>
-    
-  </View>
+    </View>
 
   );
 }

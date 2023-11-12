@@ -10,7 +10,7 @@ export default function TextToMorseScreen() {
 
   const [playing, setPlaying] = useState(false);
   const [generated, setGenerated] = useState(false);
-  const [inputText, setInputText] = useState(null);
+  const [inputText, setInputText] = useState('');
 
  
 
@@ -33,13 +33,14 @@ export default function TextToMorseScreen() {
   async function playMorse() {
     try {
 
-      if (generated === true) {
+      if (generated) {
       
         // This is for simply playing the sound back
-        // zalezy jak plik bedzie przesylany i przechowywany 
+        // zalezy jak plik bedzie przesylany i przechowywany
+         
         // const playbackObject = new Audio.Sound();
         // await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${savedFileName}` });
-        console.log('FileSystem.documentDirectory')
+        console.log(inputText)
         // await playbackObject.playAsync();
 
       }
@@ -52,12 +53,12 @@ export default function TextToMorseScreen() {
   async function downloadMorse() {
     try {
 
-      if (generated === true) {
+      if (generated) {
         console.log('Download Recording')
       
         // const ifSharing = await Sharing.shareAsync(FileSystem.documentDirectory + 'recordings/' + `${savedFileName}`);
       
-        console.log('share async '+ ifSharing)
+        // console.log('share async '+ ifSharing)
 
       }
 
@@ -65,6 +66,24 @@ export default function TextToMorseScreen() {
       console.error('Failed to play recording', error);
     }
   }
+
+  async function generateMorse() {
+    try {
+      // console.log(inputText)
+      if (inputText) {
+        // console.log('Generate sound')
+      
+        // const ifSharing = await Sharing.shareAsync(FileSystem.documentDirectory + 'recordings/' + `${savedFileName}`);
+      
+        console.log('Input text: '+ inputText)
+
+      }
+
+    } catch (error) {
+      console.error('Failed to play recording', error);
+    }
+  }
+
 
 
 
@@ -113,16 +132,16 @@ export default function TextToMorseScreen() {
           multiline = {true}
           textAlignVertical = 'top'
           // onChangeText={onChangeText}
-          // value={text}
+          value={inputText}
           // placeholder="Type here to translate!"
-          // onChangeText={setInputText}
+          onChangeText={text => setInputText(text)}
           // value={inputText}
-          ref = {(el) => { this.textToTranslate = el; }}
+          // ref = {(el) => { this.textToTranslate = el; }}
           placeholder="Tekst to przetłumaczenia na kod Morsa"
         />
     
         <View style={{ flexDirection:"row" }}>
-          <TouchableOpacity style={styles.buttonStyle}>
+          <TouchableOpacity style={styles.buttonStyle} onPress={generateMorse}>
             <Text>
               Generate
             </Text>
@@ -142,7 +161,7 @@ export default function TextToMorseScreen() {
           </TouchableOpacity>
         </View>  
   
-        <TouchableOpacity style={styles.buttonCircle} onPress={console.log(this.textToTranslate)}>
+        <TouchableOpacity style={styles.buttonCircle} onPress={playMorse}>
           <FontAwesome name={playing ? 'stop-circle' : 'play-circle'} size={64} color="white" />
         </TouchableOpacity>
       
