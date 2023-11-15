@@ -9,14 +9,15 @@ from sklearn.cluster import SpectralClustering
 
 
 def dict_morse_to_text():
-    # loading dictionaru with translated letters to morse code
-    with open('data/morse_code.json', "r", encoding='utf-8') as file:
+    # loading dictionary with translated letters to morse code
+    with open('Backend/Algorithm/data/morse_code.json', "r", encoding='utf-8') as file:
         morse_code = json.load(file)
     from_morse = {}
     for key, value in morse_code.items():
         from_morse[value] = key
     return from_morse
-                
+
+
 #  translating sentances into morse code
 def translator_from_morse(text):
     from_morse = dict_morse_to_text()
@@ -74,6 +75,7 @@ def dict_class_to_morse(cluster_centers):
         dict[3] = '.'
         dict[4] = '-'
     return dict
+
 
 def sound_translator(path):
     samples, sampling_rate = librosa.load(path, sr=5500, mono=True, offset=0.0
