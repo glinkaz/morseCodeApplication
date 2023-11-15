@@ -21,8 +21,8 @@ def dict_morse_to_text():
 def translator_from_morse(text):
     from_morse = dict_morse_to_text()
     return " ".join(["".join([from_morse.get("".join(sign.split(","))) for sign in word.split("_")]) for word in text.split(" ")])
- 
-    
+
+
 def dict_class_to_morse(cluster_centers):
     dict = {}
     if len(cluster_centers[cluster_centers > 0]) == 1 and len(cluster_centers[cluster_centers < 0]) == 1:
