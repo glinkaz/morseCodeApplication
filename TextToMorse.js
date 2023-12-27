@@ -231,7 +231,7 @@ const postTextToTranslate = async () => {
           onChangeText={text => setInputText(text)}
           // value={inputText}
           // ref = {(el) => { this.textToTranslate = el; }}
-          placeholder="Tekst to przetłumaczenia na kod Morsa"
+          placeholder="Text to be translated into Morse code"
         />
     
         <View style={{ flexDirection:"row" }}>

@@ -25,8 +25,17 @@ def translator_from_morse(text):
     return " ".join(["".join([from_morse.get("".join(sign.split(","))) for sign in word.split("_")]) for word in text.split(" ")])
 
 
+#  translating sentances into morse code
+def translator_from_morse(text):
+    from_morse = dict_morse_to_text()
+    return " ".join(["".join([from_morse.get("".join(sign.split(","))) for sign in word.split("_")]) for word in text.split(" ")])
+
+
 def dict_class_to_morse(cluster_centers):
     dict = {}
+    print(cluster_centers)
+    if len(cluster_centers) == 1:
+        dict[0] = '.'
     if len(cluster_centers[cluster_centers > 0]) == 1 and len(cluster_centers[cluster_centers < 0]) == 1:
         dict[0] = ','
         dict[1] = '.'
@@ -55,19 +64,19 @@ def dict_class_to_morse(cluster_centers):
             dict[1] = '.'
             dict[2] = '-'
     elif len(cluster_centers[cluster_centers > 0]) == 2 and len(cluster_centers[cluster_centers < 0]) == 2:
-        print(cluster_centers)
-        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][3])**2  < cluster_centers[cluster_centers>0][0]**2:
+        # print(cluster_centers)
+        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][1])**2  < cluster_centers[cluster_centers>0][0]**2:
             dict[0] = ' '
             dict[1] = '_'
             dict[2] = '.'
             dict[3] = '-'
-        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][3])**2  > cluster_centers[cluster_centers>0][0]**2:
+        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2:
             dict[0] = ' '
             dict[1] = ','
             dict[2] = '.'
             dict[3] = '-'
         else:
-            print("opcja 2")
+            # print("opcja 2")
             dict[0] = '_'
             dict[1] = ','
             dict[2] = '.'
@@ -85,6 +94,7 @@ def dict_class_to_morse(cluster_centers):
 def sound_translator(path):
     samples, sampling_rate = librosa.load(path, sr=10000, mono=True, offset=0.0
                         , duration=None)
+    # print(samples)
     max_abs_scaler = preprocessing.MaxAbsScaler()
     new_samples = max_abs_scaler.fit_transform(np.array(samples).reshape(1,-1).T)
     # new_samples = ((pd.Series(samples) - min(samples)) * (1 - (-1))) / (max(samples) - min(samples)) + (-1)
@@ -113,19 +123,27 @@ def sound_translator(path):
     scaler = StandardScaler()
     scaled = scaler.fit_transform(np.array([i for i in new_list]).reshape(1,-1).T)
     silhouette_coefficients = []
-    for k in range(2, 6):
-        if(len(scaled)>k):
-            clustering = SpectralClustering(n_clusters=k).fit(scaled)
-            score = silhouette_score(scaled, clustering.labels_)
-            silhouette_coefficients.append(score)
+    if(len(scaled)>1):
+        for k in range(2, 6):
+            if(len(scaled)>k):
+                clustering = SpectralClustering(n_clusters=k).fit(scaled)
+                score = silhouette_score(scaled, clustering.labels_)
+                silhouette_coefficients.append(score)
+                # print(score)
 
-    n_clust = silhouette_coefficients.index(max(silhouette_coefficients))+2
-    clustering = SpectralClustering(n_clusters=n_clust)
-    clustering.fit(scaled)
-    
-    df = pd.DataFrame(columns = ['length', 'class'])
-    df['length'] = new_list
-    df['class'] = clustering.labels_
+        # print(silhouette_coefficients)
+        n_clust = silhouette_coefficients.index(max(silhouette_coefficients))+2
+        clustering = SpectralClustering(n_clusters=n_clust)
+        clustering.fit(scaled)
+        
+        df = pd.DataFrame(columns = ['length', 'class'])
+        df['length'] = new_list
+        df['class'] = clustering.labels_
+    else:
+        n_clust = 1
+        df = pd.DataFrame(columns = ['length', 'class'])
+        df['length'] = new_list
+        df['class'] = 0
 
     cB0 =df['class']
     ord_idx=np.argsort(df.groupby(['class']).mean()['length'])
