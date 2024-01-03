@@ -10,7 +10,7 @@ import RNFS from 'react-native-fs';
 // var Buffer = require('buffer/').Buffer 
 export default function TextToMorseScreen() { 
 
-  const backendUrl = "http://127.0.0.1:5000";
+  const backendUrl = 'https://morse-code-backend.ew.r.appspot.com'; //"http://127.0.0.1:5000";//
   const [playing, setPlaying] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [inputText, setInputText] = useState(''); 
@@ -34,19 +34,19 @@ const postTextToTranslate = async () => {
 
     // const response =
     console.log(inputText)
-    const res = await axios.post(backendUrl+'/translate_to_morse',{"morse" : inputText})
+    const res = await axios.post(backendUrl+'/translate_to_morse/',{"morse" : inputText})
       // responseType: 'arraybuffer',  // Ustawienie typu odpowiedzi na arraybuffer
     
     setFileName(res.data)
 
     console.log(res.data);
-    data_sound =  await axios.get(backendUrl+'/translate_to_morse?filename='+res.data+'.wav', 
+    data_sound =  await axios.get(backendUrl+'/translate_to_morse/?filename='+res.data, 
     {
       responseType: 'arraybuffer',
       headers: {'Content-Type': 'audio/wav'}
       })
     console.log(fileName)
-    await axios.post(backendUrl+'/delete_file', {'file_name':res.data})
+    // await axios.post(backendUrl+'/delete_file', {'file_name':res.data})
     const base64File = data_sound.request._response
     const DIR = FileSystem.documentDirectory + 'recordings/';
     // const filename = res.data+'.wav';
@@ -231,7 +231,7 @@ const postTextToTranslate = async () => {
           onChangeText={text => setInputText(text)}
           // value={inputText}
           // ref = {(el) => { this.textToTranslate = el; }}
-          placeholder="Tekst to przetłumaczenia na kod Morsa"
+          placeholder="Text to be translated into Morse code."
         />
     
         <View style={{ flexDirection:"row" }}>

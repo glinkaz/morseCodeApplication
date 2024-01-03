@@ -11,7 +11,7 @@ import RNFS from 'react-native-fs';
 
 export default function MorseToTextScreen() {
 
-  const backendUrl = "http://127.0.0.1:5000"; 
+  const backendUrl = 'https://morse-code-backend.ew.r.appspot.com'; //"http://127.0.0.1:5000";//
   const [recording, setRecording] = useState(null);
   const [recordingStatus, setRecordingStatus] = useState('idle');
   const [audioPermission, setAudioPermission] = useState(null);
@@ -41,7 +41,7 @@ export default function MorseToTextScreen() {
       // formData.append('key', 'value');
   
       // Wysyłanie żądania POST do backendu
-      const response = await axios.post(backendUrl+'/translate_from_morse', formData, {
+      const response = await axios.post(backendUrl+'/translate_from_morse/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

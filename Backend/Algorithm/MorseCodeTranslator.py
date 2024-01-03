@@ -56,12 +56,12 @@ def dict_class_to_morse(cluster_centers):
             dict[2] = '-'
     elif len(cluster_centers[cluster_centers > 0]) == 2 and len(cluster_centers[cluster_centers < 0]) == 2:
         print(cluster_centers)
-        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][3])**2  < cluster_centers[cluster_centers>0][0]**2:
+        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][1])**2  < cluster_centers[cluster_centers>0][0]**2:
             dict[0] = ' '
             dict[1] = '_'
             dict[2] = '.'
             dict[3] = '-'
-        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][3])**2  > cluster_centers[cluster_centers>0][0]**2:
+        if (abs(cluster_centers[0]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2 and (abs(cluster_centers[1]) - cluster_centers[cluster_centers>0][1])**2  > cluster_centers[cluster_centers>0][0]**2:
             dict[0] = ' '
             dict[1] = ','
             dict[2] = '.'
@@ -109,9 +109,17 @@ def sound_translator(path):
             k = i 
     new_list.append(len(new_bin_samples)-k)
     # new_list = [i for i in new_list if abs(i)>max(new_list)/10]
-    new_list = [i for i in new_list if abs(i)>100]
+    new_list = [i  if abs(i)>200 else -i for i in new_list]
+
+    snl = []
+    for j in range(len(new_list)):
+        if j != len(new_list)-1 and new_list[j] * new_list[j+1] > 0:
+            new_list[j+1] = new_list[j+1] + new_list[j]
+        else:
+            snl += [new_list[j]]
+
     scaler = StandardScaler()
-    scaled = scaler.fit_transform(np.array([i for i in new_list]).reshape(1,-1).T)
+    scaled = scaler.fit_transform(np.array([i for i in snl]).reshape(1,-1).T)
     silhouette_coefficients = []
     for k in range(2, 6):
         if(len(scaled)>k):
@@ -124,7 +132,7 @@ def sound_translator(path):
     clustering.fit(scaled)
     
     df = pd.DataFrame(columns = ['length', 'class'])
-    df['length'] = new_list
+    df['length'] = snl
     df['class'] = clustering.labels_
 
     cB0 =df['class']
@@ -134,7 +142,7 @@ def sound_translator(path):
         cntrs[cB0==ord_idx[i]]=i
 
     df = pd.DataFrame(columns = ['length', 'class'])
-    df['length'] = new_list
+    df['length'] = snl
     df['class'] = cntrs
     dict = dict_class_to_morse(np.array([np.sort(df.groupby(['class']).mean()['length'])]).T)
     # print(df['class'])
