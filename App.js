@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SettingsStackScreen} from './Details.js';
+import { HomeScreen} from './Details.js';
 import MorseToTextScreen from './MorseToText.js';
 import TextToMorseScreen from './TextToMorse.js';
 
@@ -22,7 +22,7 @@ export default function App() {
             showIcon: true,
             showLabel: true, }}
       /> 
-              <Tab.Screen name="Details" component={SettingsStackScreen} />
+              <Tab.Screen name="Details" component={HomeScreen} />
       </Tab.Navigator>
     </NavigationContainer>
       );

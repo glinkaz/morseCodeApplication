@@ -13,7 +13,6 @@ def generate_morse_code_audio_file(text_in_morse: str, file_name: str):
         return from_morse
 
     def text_to_morse(text: str) -> str:
-        text_morse = []
         morse_code_dict = dict_morse_to_text()
         text = text.upper()
         text_morse_words = []

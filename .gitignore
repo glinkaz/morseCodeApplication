@@ -36,3 +36,8 @@ yarn-error.*
 
 #saved files
 Backend/tmp/
+
+Backend/Algorithm/__pychache__
+ios/
+package-lock.json
+

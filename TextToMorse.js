@@ -7,7 +7,6 @@ import axios from "axios";
 import { Audio } from 'expo-av';
 import RNFS from 'react-native-fs';
 
-// var Buffer = require('buffer/').Buffer 
 export default function TextToMorseScreen() { 
 
   const backendUrl = 'https://morse-code-backend.ew.r.appspot.com'; //"http://127.0.0.1:5000";//
@@ -15,7 +14,6 @@ export default function TextToMorseScreen() {
   const [generated, setGenerated] = useState(false);
   const [inputText, setInputText] = useState(''); 
   const [audioUrl, setAudioUrl] = useState();
-  const [sound, setSound] = useState();
   const [fileName, setFileName] = useState();
   
   const base64ToWav = async (base64String, filePath) => {
@@ -32,13 +30,9 @@ export default function TextToMorseScreen() {
 
 const postTextToTranslate = async () => {
 
-    // const response =
     console.log(inputText)
     const res = await axios.post(backendUrl+'/translate_to_morse/',{"morse" : inputText})
-      // responseType: 'arraybuffer',  // Ustawienie typu odpowiedzi na arraybuffer
-    
     setFileName(res.data)
-
     console.log(res.data);
     data_sound =  await axios.get(backendUrl+'/translate_to_morse/?filename='+res.data, 
     {
@@ -46,20 +40,13 @@ const postTextToTranslate = async () => {
       headers: {'Content-Type': 'audio/wav'}
       })
     console.log(fileName)
-    // await axios.post(backendUrl+'/delete_file', {'file_name':res.data})
     const base64File = data_sound.request._response
     const DIR = FileSystem.documentDirectory + 'recordings/';
-    // const filename = res.data+'.wav';
     const fileurl = DIR + res.data+'.wav';
     base64ToWav(base64File,fileurl)
-    console.log("log 1: "+fileurl)
-    setAudioUrl(fileurl)//data.request.responseURL)
-    console.log("log 2")
+    setAudioUrl(fileurl)
     setGenerated(true)
-    console.log("translated")
-    console.log("Playing: "+ playing)
-//     console.error("Error translating to Morse:", error);
-//     // Obsłuż błędy tutaj
+
 };
 
  
@@ -75,90 +62,24 @@ const postTextToTranslate = async () => {
           setAudioUrl();
           setFileName('');
           setPlaying(false);
-
       }
     }
     catch (error) {
         console.error('Failed to reset recording', error);
       }
   }
-  function isPlaying(playing) {
-    return new Promise(resolve => setPlaying(resolve, playing));
-}
+
   async function playSound() {
         try {
-        // This is for simply playing the sound back
-        // if( !playing){
+          if (generated & fileName !== null){
           setPlaying(!playing)
           const playbackObject = new Audio.Sound();
           await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}`+'.wav' });
           console.log(FileSystem.documentDirectory + 'recordings/' + `${fileName}`+'.wav')
           await playbackObject.setVolumeAsync(1);
           await playbackObject.playAsync();
-         setPlaying(false)
-        // }
-      
-
-    } catch (error) {
-      console.error('Failed to play recording', error);
-    }
-  }
-
-  
-
-    // const playSound = async () => {
-
-    //     setPlaying(!playing)
-    //     console.log(generated == true) // && playing == true
-    //     // if (generated === true){ // && playing == true
-    //     console.log('Loading Sound');
-    //     console.log(audioUrl)
-    //     const playbackObject = new Audio.Sound();
-    //     playbackObject.setOnPlaybackStatusUpdate();
-    //     await playbackObject.loadAsync({ uri: audioUrl });
-    //     await playbackObject.playAsync();
-    //     console.log("Stop sound")
-    //     setPlaying(false)
-    
-    // }
-  
-    // useEffect(() => {
-    //   return sound
-    //     ? () => {
-    //       // playSound()
-    //         setPlaying(false)
-    //         console.log('Unloading Sound');
-    //         sound.unloadAsync();
-    //       }
-    //     : undefined;
-    // }, [sound]);
-
-  
-
-
-  async function playMorse() {
-    try {
-
-      console.log(generated)
-      if (generated && audioUrl) {
-        setPlaying(true)
-        console.log("Playing")
-        console.log(audioUrl)
-
-        const playbackObject = new Audio.Sound();
-        console.log('playbackObject')
-        await playbackObject.loadAsync( {uri:audioUrl});//loadAsync({uri: audioUrl });
-        setSound(playbackObject);
-        // await sound.setPositionAsync(0);
-        await playbackObject.playAsync();
-        await playbackObject.unloadAsync();
-        console.log('play')
- 
-        console.log('Playing Sound');
-        setPlaying(false)
-
-      }
-
+         setPlaying(false)  
+          }    
     } catch (error) {
       console.error('Failed to play recording', error);
     }
@@ -166,16 +87,10 @@ const postTextToTranslate = async () => {
 
   async function downloadMorse() {
     try {
-
       if (generated) {
         console.log(audioUrl)
-      
-        const ifSharing = await Sharing.shareAsync(audioUrl);
-      
-        // console.log('share async '+ ifSharing)
-
+        await Sharing.shareAsync(audioUrl);
       }
-
     } catch (error) {
       console.error('Failed to play recording', error);
     }
@@ -213,7 +128,6 @@ const postTextToTranslate = async () => {
         borderWidth: 1,
         padding:10,
         borderRadius: 5,
-        // backgroundColor:'grey',
 
       },
   });
@@ -225,12 +139,8 @@ const postTextToTranslate = async () => {
           style={styles.input}
           multiline = {true}
           textAlignVertical = 'top'
-          // onChangeText={onChangeText}
           value={inputText}
-          // placeholder="Type here to translate!"
           onChangeText={text => setInputText(text)}
-          // value={inputText}
-          // ref = {(el) => { this.textToTranslate = el; }}
           placeholder="Text to be translated into Morse code."
         />
     
@@ -239,28 +149,21 @@ const postTextToTranslate = async () => {
             <Text>
               Generate
             </Text>
-            {/* <FontAwesome name={'trash'} size={20} color="white" /> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyle} onPress={downloadMorse}>
-            {/* <FontAwesome name={'download'} size={20} color="white" /> */}
             <Text>
               Download
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyle} onPress={resetInputText}>
-            {/* <FontAwesome name={'translate'} size={64} color="white" /> */}
             <Text>
               Reset
             </Text>
           </TouchableOpacity>
         </View>  
-  
         <TouchableOpacity style={styles.buttonCircle} onPress={playSound} >
-
-          <FontAwesome name={playing ? 'stop-circle' :'play-circle'} size={64} color="white" />
-          {/* playing ? 'stop-circle' :  */}
-        </TouchableOpacity>
-      
+          <FontAwesome name={'play-circle'} size={64} color="white" />{/* playing ? 'stop-circle' : */}
+        </TouchableOpacity>   
       </View>
     );
   }
