@@ -4,10 +4,10 @@ orig_message,message_after_translation,source,word_cnt,letter_cnt,accuracy_sente
 8543232,8543232,beep,7,7,1,1.0,1.0
 8543232,8543232,doorbell,7,7,1,1.0,1.0
 8543232,8543232,bell,7,7,1,1.0,1.0
-8543232,8543232,beep2,7,7,1,1.0,1.0
+8543232,8 5 4 3 2 3 2,beep2,7,7,0,0.0,0.07692307692307693
 8543232,8543232,spaceship,7,7,1,1.0,1.0
 8543232,8543232,guitar,7,7,1,1.0,1.0
-8543232,8543232,horn,7,7,1,1.0,1.0
+8543232,Cant translate sound,horn,7,7,0,0.0,0.0
 8543232,8 5 4 3 2 3 2,slide,7,7,0,0.0,0.07692307692307693
 8543232,8543232,ring,7,7,1,1.0,1.0
 What joy there,WHAT JOY THERE,alert,14,14,1,1.0,1.0
@@ -29,7 +29,7 @@ Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRA
 Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,beep2,41,41,1,1.0,1.0
 Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,spaceship,41,41,1,1.0,1.0
 Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,guitar,41,41,1,1.0,1.0
-Schools for ladies teach charm and grace.,Cant translate sound,horn,41,41,0,0.0,0.0
+Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,horn,41,41,1,1.0,1.0
 Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,slide,41,41,1,1.0,1.0
 Schools for ladies teach charm and grace.,SCHOOLS FOR LADIES TEACH CHARM AND GRACE.,ring,41,41,1,1.0,1.0
 The juice of,THE JUICE OF,alert,12,12,1,1.0,1.0
@@ -44,14 +44,14 @@ The juice of,THE JUICE OF,horn,12,12,1,1.0,1.0
 The juice of,THE JUICE OF,slide,12,12,1,1.0,1.0
 The juice of,THE JUICE OF,ring,12,12,1,1.0,1.0
 9,5,alert,1,1,0,0.0,0.0
-9,H,electric,1,1,0,0.0,0.0
-9,9,beep,1,1,1,1.0,1.0
-9,5,doorbell,1,1,0,0.0,0.0
+9,9,electric,1,1,1,1.0,1.0
+9,5,beep,1,1,0,0.0,0.0
+9,9,doorbell,1,1,1,1.0,1.0
 9,9,bell,1,1,1,1.0,1.0
 9,5,beep2,1,1,0,0.0,0.0
 9,9,spaceship,1,1,1,1.0,1.0
-9,H,guitar,1,1,0,0.0,0.0
-9,9,horn,1,1,1,1.0,1.0
+9,9,guitar,1,1,1,1.0,1.0
+9,5,horn,1,1,0,0.0,0.0
 9,9,slide,1,1,1,1.0,1.0
 9,9,ring,1,1,1,1.0,1.0
 sos,SOS,alert,3,3,1,1.0,1.0
@@ -59,10 +59,10 @@ sos,SOS,electric,3,3,1,1.0,1.0
 sos,S O S,beep,3,3,0,0.0,0.2
 sos,SOS,doorbell,3,3,1,1.0,1.0
 sos,SOS,bell,3,3,1,1.0,1.0
-sos,SOS,beep2,3,3,1,1.0,1.0
+sos,S O S,beep2,3,3,0,0.0,0.2
 sos,SOS,spaceship,3,3,1,1.0,1.0
 sos,SOS,guitar,3,3,1,1.0,1.0
-sos,SOS,horn,3,3,1,1.0,1.0
+sos,S O S,horn,3,3,0,0.0,0.2
 sos,S O S,slide,3,3,0,0.0,0.2
 sos,SOS,ring,3,3,1,1.0,1.0
 E,E,alert,1,1,1,1.0,1.0
@@ -122,7 +122,7 @@ Tear a thin sheet from the yellow pad.,TEAR A THIN SHEET FROM THE YELLOW PAD.,sl
 Tear a thin sheet from the yellow pad.,TEAR A THIN SHEET FROM THE YELLOW PAD.,ring,38,38,1,1.0,1.0
 D,S,alert,1,1,0,0.0,0.0
 D,D,electric,1,1,1,1.0,1.0
-D,S,beep,1,1,0,0.0,0.0
+D,D,beep,1,1,1,1.0,1.0
 D,D,doorbell,1,1,1,1.0,1.0
 D,D,bell,1,1,1,1.0,1.0
 D,S,beep2,1,1,0,0.0,0.0
@@ -166,7 +166,7 @@ An abrupt start does not win the prize.,AN ABRUPT START DOES NOT WIN THE PRIZE.,
 An abrupt start does not win the prize.,AN ABRUPT START DOES NOT WIN THE PRIZE.,ring,39,39,1,1.0,1.0
 Down that road is,DOWN THAT ROAD IS,alert,17,17,1,1.0,1.0
 Down that road is,DOWN THAT ROAD IS,electric,17,17,1,1.0,1.0
-Down that road is,DOWN THAT ROAD IS,beep,17,17,1,1.0,1.0
+Down that road is,Cant translate sound,beep,17,17,0,0.0,0.2
 Down that road is,DOWN THAT ROAD IS,doorbell,17,17,1,1.0,1.0
 Down that road is,DOWN THAT ROAD IS,bell,17,17,1,1.0,1.0
 Down that road is,DOWN THAT ROAD IS,beep2,17,17,1,1.0,1.0
@@ -180,10 +180,10 @@ iuyt,IUYT,electric,4,4,1,1.0,1.0
 iuyt,IUYT,beep,4,4,1,1.0,1.0
 iuyt,IUYT,doorbell,4,4,1,1.0,1.0
 iuyt,IUYT,bell,4,4,1,1.0,1.0
-iuyt,I U Y T,beep2,4,4,0,0.0,0.14285714285714285
+iuyt,IUYT,beep2,4,4,1,1.0,1.0
 iuyt,IUYT,spaceship,4,4,1,1.0,1.0
 iuyt,IUYT,guitar,4,4,1,1.0,1.0
-iuyt,I U Y T,horn,4,4,0,0.0,0.14285714285714285
+iuyt,IUYT,horn,4,4,1,1.0,1.0
 iuyt,I U Y T,slide,4,4,0,0.0,0.14285714285714285
 iuyt,IUYT,ring,4,4,1,1.0,1.0
 girl gave no,GIRL GAVE NO,alert,12,12,1,1.0,1.0
@@ -293,19 +293,19 @@ The lawyer tried to lose his case.,THE LAWYER TRIED TO LOSE HIS CASE.,ring,34,34
 12WSD,12WSD,beep2,5,5,1,1.0,1.0
 12WSD,12WSD,spaceship,5,5,1,1.0,1.0
 12WSD,12WSD,guitar,5,5,1,1.0,1.0
-12WSD,1 2 W S D,horn,5,5,0,0.0,0.1111111111111111
+12WSD,12WSD,horn,5,5,1,1.0,1.0
 12WSD,1 2 W S D,slide,5,5,0,0.0,0.1111111111111111
 12WSD,12WSD,ring,5,5,1,1.0,1.0
 The,THE,alert,3,3,1,1.0,1.0
 The,THE,electric,3,3,1,1.0,1.0
-The,EHE,beep,3,3,0,0.0,0.6666666666666666
+The,THE,beep,3,3,1,1.0,1.0
 The,THE,doorbell,3,3,1,1.0,1.0
 The,THE,bell,3,3,1,1.0,1.0
-The,THE,beep2,3,3,1,1.0,1.0
+The,EHE,beep2,3,3,0,0.0,0.6666666666666666
 The,THE,spaceship,3,3,1,1.0,1.0
 The,THE,guitar,3,3,1,1.0,1.0
-The,EHE,horn,3,3,0,0.0,0.6666666666666666
-The,T H E,slide,3,3,0,0.0,0.2
+The,THE,horn,3,3,1,1.0,1.0
+The,THE,slide,3,3,1,1.0,1.0
 The,THE,ring,3,3,1,1.0,1.0
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,alert,39,39,1,1.0,1.0
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,electric,39,39,1,1.0,1.0
@@ -315,7 +315,7 @@ Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,beep2,39,39,1,1.0,1.0
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,spaceship,39,39,1,1.0,1.0
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,guitar,39,39,1,1.0,1.0
-Write fast if you want to finish early.,Cant translate sound,horn,39,39,0,0.0,0.05128205128205128
+Write fast if you want to finish early.,WRUE FAST IF YOU WAK TO FINISH EARLY.,horn,39,39,0,0.75,0.10256410256410256
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,slide,39,39,1,1.0,1.0
 Write fast if you want to finish early.,WRITE FAST IF YOU WANT TO FINISH EARLY.,ring,39,39,1,1.0,1.0
 The beam dropped down on the workmen's head.,THE BEAM DROPPED DOWN ON THE WORKMEN'S HEAD.,alert,44,44,1,1.0,1.0
@@ -349,7 +349,7 @@ ice,ICE,beep2,3,3,1,1.0,1.0
 ice,ICE,spaceship,3,3,1,1.0,1.0
 ice,ICE,guitar,3,3,1,1.0,1.0
 ice,ICE,horn,3,3,1,1.0,1.0
-ice,I C E,slide,3,3,0,0.0,0.2
+ice,ICE,slide,3,3,1,1.0,1.0
 ice,ICE,ring,3,3,1,1.0,1.0
 Rice,RICE,alert,4,4,1,1.0,1.0
 Rice,RICE,electric,4,4,1,1.0,1.0
@@ -360,7 +360,7 @@ Rice,RICE,beep2,4,4,1,1.0,1.0
 Rice,RICE,spaceship,4,4,1,1.0,1.0
 Rice,RICE,guitar,4,4,1,1.0,1.0
 Rice,RICE,horn,4,4,1,1.0,1.0
-Rice,RICE,slide,4,4,1,1.0,1.0
+Rice,R I C E,slide,4,4,0,0.0,0.14285714285714285
 Rice,RICE,ring,4,4,1,1.0,1.0
 to,H,alert,2,2,0,0.0,0.0
 to,H,electric,2,2,0,0.0,0.0
@@ -373,7 +373,7 @@ to,H,guitar,2,2,0,0.0,0.0
 to,H,horn,2,2,0,0.0,0.0
 to,H,slide,2,2,0,0.0,0.0
 to,H,ring,2,2,0,0.0,0.0
-of office each March.,Cant translate sound,alert,21,21,0,0.0,0.09523809523809523
+of office each March.,OF OFFICE EACH MARCH.,alert,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,electric,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,beep,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,doorbell,21,21,1,1.0,1.0
@@ -384,7 +384,7 @@ of office each March.,OF OFFICE EACH MARCH.,guitar,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,horn,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,slide,21,21,1,1.0,1.0
 of office each March.,OF OFFICE EACH MARCH.,ring,21,21,1,1.0,1.0
-The old pan was covered with hard fudge.,THE OLD PAN WAS COVERED WITH HARB FUDGE.,alert,40,40,0,0.875,0.975
+The old pan was covered with hard fudge.,THE OLD PAN WAS COVERED WITH HARD FUDGE.,alert,40,40,1,1.0,1.0
 The old pan was covered with hard fudge.,THE OLD PAN WAS COVERED WITH HARD FUDGE.,electric,40,40,1,1.0,1.0
 The old pan was covered with hard fudge.,THE OLD PAN WAS COVERED WITH HARD FUDGE.,beep,40,40,1,1.0,1.0
 The old pan was covered with hard fudge.,THE OLD PAN WAS COVERED WITH HARD FUDGE.,doorbell,40,40,1,1.0,1.0
@@ -450,7 +450,7 @@ the coat.,THE COAT.,guitar,9,9,1,1.0,1.0
 the coat.,THE COAT.,horn,9,9,1,1.0,1.0
 the coat.,THE COAT.,slide,9,9,1,1.0,1.0
 the coat.,THE COAT.,ring,9,9,1,1.0,1.0
-19 of September,19 OF SEPTEMBER,alert,15,15,1,1.0,1.0
+19 of September,Cant translate sound,alert,15,15,0,0.0,0.05
 19 of September,19 OF SEPTEMBER,electric,15,15,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,beep,15,15,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,doorbell,15,15,1,1.0,1.0
@@ -459,19 +459,19 @@ the coat.,THE COAT.,ring,9,9,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,spaceship,15,15,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,guitar,15,15,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,horn,15,15,1,1.0,1.0
-19 of September,19 OF S PTEMBER,slide,15,15,0,0.6666666666666666,0.9333333333333333
+19 of September,19 OF SEPTEMBER,slide,15,15,1,1.0,1.0
 19 of September,19 OF SEPTEMBER,ring,15,15,1,1.0,1.0
 A,I,alert,1,1,0,0.0,0.0
-A,E,electric,1,1,0,0.0,0.0
+A,I,electric,1,1,0,0.0,0.0
 A,I,beep,1,1,0,0.0,0.0
-A,E,doorbell,1,1,0,0.0,0.0
-A,E,bell,1,1,0,0.0,0.0
+A,I,doorbell,1,1,0,0.0,0.0
+A,I,bell,1,1,0,0.0,0.0
 A,I,beep2,1,1,0,0.0,0.0
-A,I,spaceship,1,1,0,0.0,0.0
+A,E,spaceship,1,1,0,0.0,0.0
 A,E,guitar,1,1,0,0.0,0.0
 A,I,horn,1,1,0,0.0,0.0
 A,I,slide,1,1,0,0.0,0.0
-A,E,ring,1,1,0,0.0,0.0
+A,I,ring,1,1,0,0.0,0.0
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,alert,35,35,1,1.0,1.0
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,electric,35,35,1,1.0,1.0
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,beep,35,35,1,1.0,1.0
@@ -483,7 +483,7 @@ The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,guitar,3
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,horn,35,35,1,1.0,1.0
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,slide,35,35,1,1.0,1.0
 The bill was paid every third week.,THE BILL WAS PAID EVERY THIRD WEEK.,ring,35,35,1,1.0,1.0
-The stems of the tall glasses cracked and broke.,THE STEMS OF THE NALL GLASSES CRACKED AND BROKE.,alert,48,48,0,0.8888888888888888,0.9791666666666666
+The stems of the tall glasses cracked and broke.,THE STEMS OF THE TALL GLASSES CRACKED AND BROKE.,alert,48,48,1,1.0,1.0
 The stems of the tall glasses cracked and broke.,THE STEMS OF THE TALL GLASSES CRACKED AND BROKE.,electric,48,48,1,1.0,1.0
 The stems of the tall glasses cracked and broke.,THE STEMS OF THE TALL GLASSES CRACKED AND BROKE.,beep,48,48,1,1.0,1.0
 The stems of the tall glasses cracked and broke.,THE STEMS OF THE TALL GLASSES CRACKED AND BROKE.,doorbell,48,48,1,1.0,1.0
@@ -507,7 +507,7 @@ Two blue fish,TWO BLUE FISH,slide,13,13,1,1.0,1.0
 Two blue fish,TWO BLUE FISH,ring,13,13,1,1.0,1.0
 mouse.,MOUSE.,alert,6,6,1,1.0,1.0
 mouse.,MOUSE.,electric,6,6,1,1.0,1.0
-mouse.,MOUSE.,beep,6,6,1,1.0,1.0
+mouse.,M O U S E .,beep,6,6,0,0.0,0.09090909090909091
 mouse.,MOUSE.,doorbell,6,6,1,1.0,1.0
 mouse.,MOUSE.,bell,6,6,1,1.0,1.0
 mouse.,MOUSE.,beep2,6,6,1,1.0,1.0
